@@ -1,0 +1,36 @@
+services:
+
+  backend:
+    build: ./backend
+    image: backend_bookline
+    container_name: backend_bookline
+    restart: always
+    volumes:
+      - ./backend/app:/backend/app
+    ports:
+      - "8000:80"
+
+  db:
+    image: mysql:9.3.0
+    container_name: mysql_bookline
+    restart: always
+    environment:
+      MYSQL_USER: ${DB_USER}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+    volumes:
+      - db_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+
+  adminer:
+    image: adminer
+    container_name: adminer_bookline
+    restart: always
+    ports:
+      - "8080:8080"
+
+volumes:
+  db_data:
+    driver: local
