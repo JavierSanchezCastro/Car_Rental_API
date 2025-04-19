@@ -10,6 +10,8 @@ from asyncio import sleep
 import time
 from fastapi import Request
 from db.session import engine
+from db.models.Car import Car
+from db.models.Booking import Booking
 
 def create_tables():
     print ("Creating tables...", flush=True)
