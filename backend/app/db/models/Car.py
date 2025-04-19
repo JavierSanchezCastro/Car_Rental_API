@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from sqlalchemy import String, Integer, Float, Boolean, Enum, Numeric
+from sqlalchemy import String, Integer, Boolean, Enum, Numeric
 from db.models.Base import Base
 from enum import Enum as PyEnum
 

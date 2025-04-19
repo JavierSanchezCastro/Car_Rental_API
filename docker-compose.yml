@@ -7,8 +7,10 @@ services:
     restart: always
     volumes:
       - ./backend/app:/backend/app
+      - ./backend/scripts:/backend/scripts
     ports:
       - "8000:80"
+    entrypoint: ["/backend/entrypoint.sh"]
 
   db:
     image: mysql:9.3.0

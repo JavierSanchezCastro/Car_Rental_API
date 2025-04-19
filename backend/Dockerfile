@@ -10,6 +10,10 @@ RUN pip install --no-cache-dir --upgrade -r /backend/requirements.txt
 
 COPY ./app /backend/app
 
+COPY ./scripts /backend/scripts
+
+COPY entrypoint.sh /backend/
+
 WORKDIR /backend/app
 
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "80", "--reload"]
+#CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "80", "--reload"]

@@ -1,14 +1,15 @@
 from pydantic import BaseModel
 from db.models.Car import CarType
+from pydantic import UUID4
 
 class CarBase(BaseModel):
     brand: str
     model: str
     type: CarType
-    year: str
-    price_per_day: str
+    year: int
+    price_per_day: float
     is_available: bool
 
 
 class CarShow(CarBase):
-    pass
+    uuid: UUID4
