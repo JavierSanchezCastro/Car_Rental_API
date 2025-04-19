@@ -10,12 +10,17 @@ from asyncio import sleep
 import time
 from fastapi import Request
 from db.session import engine
+from api.base import api_router
 from db.models.Car import Car
 from db.models.Booking import Booking
 
 def create_tables():
     print ("Creating tables...", flush=True)
     Base.metadata.create_all(bind=engine)
+
+
+def include_router(app: FastAPI):
+    app.include_router(api_router)
 
 
 @asynccontextmanager
@@ -41,8 +46,9 @@ def start_application():
     print("--------------------BOOKLINE SERVER--------------------")
     app = FastAPI(title=f"{settings.PROJECT_NAME}",
                   version=settings.PROJECT_VERSION,
-                  lifespan=lifespan,
-                  docs_url=None, redoc_url=None)
+                  lifespan=lifespan)
+    
+    include_router(app)
 
     from fastapi import __version__ as fastapi_version
     from pydantic import __version__ as pydantic_version
