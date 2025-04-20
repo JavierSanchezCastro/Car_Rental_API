@@ -53,6 +53,8 @@ def start_application():
     from fastapi import __version__ as fastapi_version
     from pydantic import __version__ as pydantic_version
     from sqlalchemy import __version__ as sqlalchemy_version
+    from datetime import date
+    print(f"Today: {date.today()}")
     print(f"FastAPI version: {fastapi_version}", flush=True)
     print(f"pydantic version: {pydantic_version}", flush=True)
     print(f"sqlAlchemy version: {sqlalchemy_version}", flush=True)
