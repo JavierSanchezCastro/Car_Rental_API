@@ -8,8 +8,11 @@ class CarBase(BaseModel):
     type: CarType
     year: int
     price_per_day: float
-    is_available: bool
-
 
 class CarShow(CarBase):
+    uuid: UUID4
+
+class CarShow_MaxDays(CarBase):
+    max_days: int
+    #id: int
     uuid: UUID4
