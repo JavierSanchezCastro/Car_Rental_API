@@ -1,8 +1,9 @@
 import sys
 import os
 import random
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date
 from sqlalchemy.orm import Session
+from sqlalchemy import not_
 
 #Add the backend directory to the path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../app")))
@@ -14,7 +15,7 @@ from db.models.Base import Base
 
 Base.metadata.create_all(bind=engine)
 
-def generate_cars():
+def generate_cars(cars_to_generate: int = 5):
     db: Session = SessionLocal()
 
     #Car distribution
@@ -60,7 +61,6 @@ def generate_cars():
         ]
     }
 
-    cars_to_generate = 40
     cars_created = 0
 
     for car_type, percentage in car_distribution.items():
@@ -80,7 +80,6 @@ def generate_cars():
                 type=car_type,
                 year=year,
                 price_per_day=round(varied_price, 2),
-                is_available=True
             )
             
             db.add(car)
@@ -92,43 +91,73 @@ def generate_cars():
     db.commit()
     print(f"✅ {cars_created} cars inserted into the database.")
 
-def generate_bookings():
-    db: Session = SessionLocal()
+def is_car_available_for_dates(car: Car, start_date: date, end_date: date) -> bool:
+    for booking_car in car.bookings:
+        if booking_car.booking_date <= end_date and start_date <= booking_car.end_booking_date:
+            return False
+    return True
+
+def generate_random_date_in_current_month() -> date:
+    """Generate a random date within the current month"""
     today = datetime.now().date()
     
-    all_cars = db.query(Car).all()
+    if today.month == 12:
+        last_day = today.replace(year=today.year + 1, month=1, day=1) - timedelta(days=1)
+    else:
+        last_day = today.replace(month=today.month + 1, day=1) - timedelta(days=1)
     
-    bookings_to_create = max(1, round(len(all_cars) * 0.3))
-    booked_cars = random.sample(all_cars, bookings_to_create)
+    random_day = random.randint(1, last_day.day)
+    return today.replace(day=random_day)
+
+def generate_bookings(num_bookings: int = 20):
+    db: Session = SessionLocal()
+    all_cars: list[Car] = db.query(Car).all()
+    
+    if not all_cars:
+        print("❌ No cars available to create bookings")
+        return
     
     bookings_created = 0
+    attempts = 0
+    max_attempts = num_bookings * 3  # Prevent infinite loops
     
-    for car in booked_cars:
-        booking_date = today - timedelta(days=random.randint(0, 15))
+    while bookings_created < num_bookings and attempts < max_attempts:
+        attempts += 1
         
-        days = random.randint(1, 7)
-        is_still_active = (booking_date + timedelta(days=days)) >= today
+        #Select random car
+        car = random.choice(all_cars)
         
-        client_num = random.randint(1, 100)
+        #Generate random booking dates
+        booking_date = generate_random_date_in_current_month()
+        days = random.randint(1, 5)
+        end_date = booking_date + timedelta(days=days)
+        
+        if not is_car_available_for_dates(car, booking_date, end_date):
+            continue  #Skip if car is not available
+        
+        #Create booking
+        client_num = random.randint(1, 1000)
         booking = Booking(
             car_id=car.id,
             customer_name=f"Client {client_num}",
             customer_email=f"client{client_num}@example.com",
             booking_date=booking_date,
+            end_booking_date=end_date,
             days=days,
-            total_price=car.price_per_day * days
+            total_price=round(car.price_per_day * days, 2)
         )
-        db.add(booking)
         
-        car.is_available = not is_still_active
+        db.add(booking)
+        db.commit()
         bookings_created += 1
     
     db.commit()
-    print(f"✅ {bookings_created} bookings created (30% of cars).")
-    print(f"📊 {sum(1 for car in all_cars if not car.is_available)} cars are now unavailable.")
+    
+    print(f"✅ {bookings_created} bookings created successfully")
+    
     return bookings_created
 
 if __name__ == "__main__":
     print("Generating Data...")
-    generate_cars()
-    generate_bookings()
+    generate_cars(10)
+    generate_bookings(30)
