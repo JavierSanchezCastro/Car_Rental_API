@@ -17,16 +17,6 @@ class CarDAO(BaseDAO):
         query = select(Car)
         cars = self.session.scalars(query).all()
         return cars
-    
-    def get_available(self) -> list[Car]:
-        query = select(Car).where(Car.is_available)
-        cars = self.session.scalars(query).all()
-        return cars
-    
-    def get_unavailable(self) -> list[Car]:
-        query = select(Car).where(not_(Car.is_available))
-        cars = self.session.scalars(query).all()
-        return cars
 
     def create(self, car_data: dict) -> Car:
         car = Car(**car_data)
