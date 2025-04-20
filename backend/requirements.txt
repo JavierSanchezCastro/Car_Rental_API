@@ -1,7 +1,9 @@
-fastapi
-pydantic
-pydantic-settings
-pymysql
-sqlalchemy
-uvicorn
-cryptography
+fastapi==0.115.12
+pydantic==2.11.3
+pydantic[email]
+pydantic-settings==2.9.1
+pymysql==1.1.1
+sqlalchemy==2.0.40
+uvicorn==0.34.2
+cryptography==44.0.2
+matplotlib==3.10.1
