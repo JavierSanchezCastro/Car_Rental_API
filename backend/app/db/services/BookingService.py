@@ -20,8 +20,6 @@ class BookingService:
     def create(booking_info: BookingCreate, db: Session):
         car = CarService.get_by_uuid(booking_info.car_uuid, db=db) #Already check with HTTPException
 
-        #car.is_available = False
-        print(car.bookings)
         start_booking = booking_info.booking_date
         end_booking = booking_info.booking_date + timedelta(days=booking_info.days)
         booking_data = booking_info.model_dump(exclude="car_uuid")

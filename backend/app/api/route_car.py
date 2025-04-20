@@ -2,16 +2,10 @@ from fastapi import APIRouter
 from fastapi.responses import StreamingResponse
 from api.utils import SessionDB
 from db.daos.CarDAO import CarDAO
-from db.daos.BookingDAO import BookingDAO
-from pydantic import UUID4, FutureDate
-from api.utils import SessionDB
+from pydantic import UUID4
 from db.services.CarService import CarService
 from db.schemas.car import CarShow, CarShow_MaxDays
 from db.schemas.booking import BookingShow
-from datetime import date, timedelta
-from fastapi import Query
-from typing import Annotated
-from pydantic import Field
 from db.schemas.utils import FutureDateOneYear
 
 router = APIRouter()

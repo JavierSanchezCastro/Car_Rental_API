@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from datetime import date
-from sqlalchemy import String, Integer, Boolean, Enum, Numeric, and_
+from sqlalchemy import String, Integer, Enum, Numeric, and_
 from db.models.Base import Base
 from enum import Enum as PyEnum
 from db.models.Booking import Booking

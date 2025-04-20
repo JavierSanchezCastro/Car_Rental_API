@@ -7,12 +7,10 @@ from sqlalchemy import create_engine
 from sqlalchemy.exc import OperationalError
 from sqlalchemy.sql import text
 from asyncio import sleep
-import time
-from fastapi import Request
 from db.session import engine
 from api.base import api_router
-from db.models.Car import Car
-from db.models.Booking import Booking
+from db.models.Car import Car #Used to Create table
+from db.models.Booking import Booking #Used to Create table
 
 def create_tables():
     print ("Creating tables...", flush=True)

@@ -3,7 +3,6 @@ import os
 import random
 from datetime import datetime, timedelta, date
 from sqlalchemy.orm import Session
-from sqlalchemy import not_
 
 #Add the backend directory to the path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../app")))

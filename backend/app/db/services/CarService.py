@@ -5,7 +5,7 @@ from db.daos.BookingDAO import BookingDAO
 from pydantic import UUID4
 from fastapi import status, HTTPException
 from datetime import date
-from sqlalchemy import select, func, and_, not_, literal, case
+from sqlalchemy import select, func, and_, literal
 from db.models.Booking import Booking
 from db.schemas.car import CarShow_MaxDays
 from datetime import datetime, timedelta
@@ -90,14 +90,11 @@ class CarService:
         year = today.year
         month = today.month
 
-        # Primer y último día del mes
         first_day = date(year, month, 1)
         last_day = date(year, month, calendar.monthrange(year, month)[1])
 
-        # Crear la figura
         fig, ax = plt.subplots(figsize=(12, 2 + len(bookings) * 0.4))
 
-        # Ejes y formato
         ax.set_xlim(first_day, last_day)
         ax.set_ylim(0, len(bookings) + 1)
         ax.xaxis.set_major_locator(mdates.DayLocator(interval=1))
@@ -105,14 +102,12 @@ class CarService:
         ax.set_yticks([])
         ax.set_title(f"Reservas del mes de {today.strftime('%B %Y')}", fontsize=14)
 
-        # Dibujar bloques con nombres
         for i, booking in enumerate(bookings, 1):
             bar_start = max(booking.booking_date, first_day)
             bar_end = min(booking.end_booking_date, last_day)
             if bar_start <= bar_end:
                 duration = (bar_end - bar_start).days
                 ax.barh(i, duration, left=bar_start, height=0.4, color='skyblue')
-                # Agregar el nombre en el centro de la barra
                 label_pos = bar_start + timedelta(days=duration / 2)
                 ax.text(label_pos, i, f"{booking.customer_name} - {booking.car.brand} {booking.car.model} ({booking.car.id})", ha='center', va='center', fontsize=9, color='black')
 
