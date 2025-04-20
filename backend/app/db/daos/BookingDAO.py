@@ -9,7 +9,7 @@ class BookingDAO(BaseDAO):
         super().__init__(session)
 
     def get_by_uuid(self, uuid: UUID4) -> Booking | None:
-        query = select(Booking).where(Booking.uuid == uuid.bytes)
+        query = select(Booking).where(Booking.uuid == str(uuid))
         booking = self.session.scalar(query)
         return booking
     
@@ -18,8 +18,8 @@ class BookingDAO(BaseDAO):
         bookings = self.session.scalars(query).all()
         return bookings
 
-    def create(self, booking_data: dict) -> Booking:
-        booking = Booking(**booking_data)
+    def create(self, car_id: int, booking_data: dict) -> Booking:
+        booking = Booking(car_id=car_id, **booking_data)
         self.session.add(booking)
         self.session.commit()
         self.session.refresh(booking)
