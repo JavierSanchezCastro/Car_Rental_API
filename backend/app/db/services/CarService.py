@@ -13,11 +13,14 @@ import calendar
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 import io
+from logger import logger
+
 
 class CarService:
 
     @staticmethod
     def get_by_uuid(uuid: UUID4, db: Session):
+        logger.info(f"Fetching car with UUID: {uuid}")
         car = CarDAO(db).get_by_uuid(uuid=uuid)
         if not car:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Car with uuid={uuid} not found")
@@ -37,6 +40,7 @@ class CarService:
 
     @staticmethod
     def get_availables(date_selected: date, db: Session):
+        logger.info(f"Checking available cars for date: {date_selected}")
         future_booking_subq = (
             select(func.min(Booking.booking_date))
             .where(and_(
@@ -80,6 +84,7 @@ class CarService:
             )
             for car, max_days in results
         ]
+        logger.info(f"Found {len(response)} available cars")
 
         return response
     
@@ -121,6 +126,10 @@ class CarService:
 
     @staticmethod
     def is_car_available(car_id: int, start_date: date, end_date: date, db: Session):
+        logger.debug(
+            f"Checking availability for car ID: {car_id} | "
+            f"Dates: {start_date} to {end_date}"
+        )
         overlap_check = (
             select(Booking.car_id)
             .where(and_(
