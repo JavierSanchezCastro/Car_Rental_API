@@ -65,8 +65,8 @@ The `generate_cars.py` script:
 ### Quick Start with Docker
 1. Clone the repository:
    ```bash
-   git clone https://github.com/JavierSanchezCastro/Bookline_Coding_test.git
-   cd Bookline_Coding_test
+   git clone https://github.com/JavierSanchezCastro/Car_Rental_API.git
+   cd Car_Rental_API
    ```
 2. **Note about .env files**:
    - The repository includes development `.env` files for immediate Docker usage
