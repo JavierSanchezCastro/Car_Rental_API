@@ -75,7 +75,7 @@ The `generate_cars.py` script:
 
 3. Start all services:
    ```bash
-   docker compose up -d
+   docker compose up -d #Delete -d to see logs
    ```
 4. Access the services:
    - API: http://localhost:8000
