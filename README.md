@@ -5,6 +5,8 @@ A REST API for a car rental service with two core endpoints:
 - List available cars for a specific date
 - Create a booking for a car on a given date
 
+**Bonus Feature**: Includes a visualization endpoint that generates an image showing all bookings for the current month.
+
 ## Design Choices
 
 ### Database Schema
@@ -33,6 +35,7 @@ A REST API for a car rental service with two core endpoints:
 **Key Implementation Details**:
 - Availability calculation uses SQL date range checks
 - Price calculation happens at booking time (price_per_day × days)
+- Includes a special visualization endpoint (`GET /car/available/image`) that generates a monthly bookings chart
 
 ## Technical Features
 
@@ -63,20 +66,25 @@ The `generate_cars.py` script:
 1. Clone the repository:
    ```bash
    git clone https://github.com/JavierSanchezCastro/Bookline_Coding_test.git
-   cd bookline
+   cd Bookline_Coding_test
    ```
-2. Start all services:
+2. **Note about .env files**:
+   - The repository includes development `.env` files for immediate Docker usage
+   - In production, these should be replaced with your own secure credentials
+   - Never commit real credentials to version control
+
+3. Start all services:
    ```bash
    docker compose up -d
    ```
-3. Access the services:
+4. Access the services:
    - API: http://localhost:8000
    - Database Admin (Adminer): http://localhost:8080
    - Interactive API Docs:
      - Swagger UI: http://localhost:8000/docs
      - ReDoc: http://localhost:8000/redoc
 
-4. Generate sample data (optional):
+5. Generate sample data (optional):
    ```bash
    docker compose run --rm backend generate_cars
    ```
@@ -92,6 +100,11 @@ Interactive docs available at:
 - http://localhost:8000/docs (Swagger UI)
 - http://localhost:8000/redoc (ReDoc)
 
+**Special Endpoint**:
+- `GET /car/available/image` - Returns a PNG image showing all bookings for the current month
+  - Visualizes booking periods as horizontal bars
+  - Includes car details and customer names
+  - Useful for quick operational overview
 
 ## Potential Improvements
 
