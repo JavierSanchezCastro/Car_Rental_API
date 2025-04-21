@@ -77,6 +77,7 @@ The `generate_cars.py` script:
    ```bash
    docker compose up -d #Delete -d to see logs
    ```
+   **Important**: On first run, you may see "Failed to connect to MySQL" messages as the database initializes. This is normal - the system will automatically retry until the database is ready (typically within 30-60 seconds).
 4. Access the services:
    - API: http://localhost:8000
    - Database Admin (Adminer): http://localhost:8080
