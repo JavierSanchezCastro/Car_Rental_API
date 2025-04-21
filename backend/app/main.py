@@ -41,7 +41,7 @@ async def lifespan(app: FastAPI):
     yield
 
 def start_application():
-    print("--------------------BOOKLINE SERVER--------------------")
+    print("--------------------CAR_RENTAL SERVER--------------------")
     app = FastAPI(title=f"{settings.PROJECT_NAME}",
                   version=settings.PROJECT_VERSION,
                   lifespan=lifespan)

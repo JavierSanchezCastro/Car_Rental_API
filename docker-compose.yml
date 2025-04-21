@@ -2,8 +2,8 @@ services:
 
   backend:
     build: ./backend
-    image: backend_bookline
-    container_name: backend_bookline
+    image: backend_car_rental
+    container_name: backend_car_rental
     restart: always
     volumes:
       - ./backend/app:/backend/app
@@ -14,7 +14,7 @@ services:
 
   db:
     image: mysql:9.3.0
-    container_name: mysql_bookline
+    container_name: mysql_car_rental
     restart: always
     environment:
       MYSQL_USER: ${DB_USER}
@@ -28,7 +28,7 @@ services:
 
   adminer:
     image: adminer
-    container_name: adminer_bookline
+    container_name: adminer_car_rental
     restart: always
     ports:
       - "8080:8080"
