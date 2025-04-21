@@ -41,7 +41,7 @@ A REST API for a car rental service with two core endpoints:
 - FastAPI 0.115.12
 - Pydantic 2.11.3
 - SQLAlchemy (ORM) 2.0.40
-- MySQL 9.3.0s
+- MySQL 9.3.0
 
 ### Quality Assurance
 - Pinned dependency versions (see requirements.txt)
@@ -106,9 +106,4 @@ Interactive docs available at:
 
 **Operational**:
 - Proper migration system (Alembic)
-
-
-
-
-----------------------
-
+--------------------
