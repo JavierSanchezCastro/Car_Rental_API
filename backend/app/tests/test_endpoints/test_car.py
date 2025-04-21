@@ -1,7 +1,4 @@
 from datetime import date, timedelta
-import pytest
-from sqlalchemy import select
-from db.models.Car import Car
 from db.models.Booking import Booking
 
 def test_get_available_cars_no_bookings(client, sample_car):
