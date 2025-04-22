@@ -5,7 +5,6 @@
 - **Live API Docs** (deployed on Railway):  
   [https://carrentalapi-production.up.railway.app/docs](https://carrentalapi-production.up.railway.app/docs)
 
----
 
 ## Overview
 A REST API for a car rental service with two core endpoints:
